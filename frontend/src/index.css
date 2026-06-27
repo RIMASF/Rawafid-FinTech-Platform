@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Rawafed Fintech — Brand Palette
+       Dark Green #05423a · Light Green #29f598 · Deep Blue #1a3e95 */
+    --background: 169 86% 9%;        /* #05423a dark green */
+    --foreground: 150 60% 96%;
+
+    --card: 169 70% 12%;
+    --card-foreground: 150 60% 96%;
+
+    --popover: 169 70% 12%;
+    --popover-foreground: 150 60% 96%;
+
+    --primary: 150 92% 57%;          /* #29f598 light green */
+    --primary-foreground: 169 86% 9%;
+    --primary-glow: 150 100% 70%;
+
+    --secondary: 222 70% 34%;        /* #1a3e95 deep blue */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 169 40% 17%;
+    --muted-foreground: 150 15% 75%;
+
+    --accent: 150 92% 50%;
+    --accent-foreground: 169 86% 9%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 169 40% 20%;
+    --input: 169 40% 17%;
+    --ring: 150 92% 57%;
+
+    --radius: 1rem;
+
+    /* Gradients */
+    --gradient-hero: radial-gradient(ellipse at top left, hsl(150 85% 18% / 0.55) 0%, hsl(169 86% 9%) 60%);
+    --gradient-glow: radial-gradient(circle at center, hsl(150 92% 50% / 0.35) 0%, transparent 70%);
+    --gradient-card: linear-gradient(145deg, hsl(169 70% 13%) 0%, hsl(169 80% 9%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(150 92% 57%) 0%, hsl(160 92% 45%) 100%);
+    --gradient-text: linear-gradient(135deg, hsl(150 100% 72%) 0%, hsl(160 92% 50%) 100%);
+
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(150 92% 50% / 0.35);
+    --shadow-card: 0 20px 60px -20px hsl(150 90% 30% / 0.25);
+    --shadow-elegant: 0 10px 30px -10px hsl(0 0% 0% / 0.6);
+
+    /* Brand stops for scroll color grading */
+    --brand-dark-green: 169 86% 9%;   /* #05423a */
+    --brand-light-green: 150 92% 57%; /* #29f598 */
+    --brand-deep-blue: 222 70% 34%;   /* #1a3e95 */
+
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* keep .dark same as root - app is always dark */
+  .dark { color-scheme: dark; }
+
+  [dir="rtl"] body { font-family: 'Tajawal', system-ui, sans-serif; }
+  [dir="ltr"] body { font-family: 'Inter', system-ui, sans-serif; }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { color-scheme: dark; }
+  body {
+    @apply text-foreground antialiased;
+    /* Color-graded scroll journey: stays in the green family — no blue on the page */
+    background-color: hsl(var(--brand-dark-green));
+    background-image: linear-gradient(
+      to bottom,
+      hsl(var(--brand-dark-green)) 0%,
+      hsl(var(--brand-dark-green)) 22%,
+      hsl(165 65% 13%) 45%,
+      hsl(160 60% 15%) 65%,
+      hsl(155 55% 13%) 85%,
+      hsl(var(--brand-dark-green)) 100%
+    );
+    background-attachment: fixed;
+  }
+  ::selection { background: hsl(var(--primary) / 0.3); color: hsl(var(--foreground)); }
+}
+
+@layer components {
+  .display-font { font-family: 'Space Grotesk', 'Tajawal', sans-serif; letter-spacing: -0.02em; }
+  [dir="rtl"] .display-font { font-family: 'Tajawal', sans-serif; }
+
+  .text-gradient {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .glow-card {
+    background: var(--gradient-card);
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s var(--transition-smooth);
+  }
+  .glow-card:hover {
+    border-color: hsl(var(--primary) / 0.5);
+    box-shadow: 0 25px 70px -20px hsl(150 90% 40% / 0.4);
+    transform: translateY(-4px);
+  }
+
+  .neon-border {
+    border: 1px solid hsl(var(--primary) / 0.4);
+    box-shadow: inset 0 0 0 1px hsl(var(--primary) / 0.1), 0 0 20px hsl(var(--primary) / 0.2);
+  }
+
+  .section-pad { @apply py-20 md:py-28 px-6 md:px-12; }
+
+  .glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-fade-up { animation: fade-up 0.7s var(--transition-smooth) both; }
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+  will-change: transform;
+}
+.animate-marquee:hover { animation-play-state: paused; }
+
+html { scroll-behavior: smooth; }
